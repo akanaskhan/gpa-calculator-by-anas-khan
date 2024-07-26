@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>GPA Calculate</title>
+</head>
+
+<body>
+    <!-- <a href="/web.html">aaa</a> -->
+    <div class="container">
+        <div class="header">
+            <h1>Sindh Madressatul Islam University</h1>
+            <h2>GPA Calculator</h2>
+        </div>
+        <form action="process.php" method="post">
+            <div class="form-group">
+                <label for="courses">Number of courses:</label>
+                <input type="number" name="courses" id="courses" required min="1">
+            </div>
+            <div id="course-inputs"></div>
+            <input type="submit" value="Calculate GPA" class="btn">
+        </form>
+    </div>
+    <div class="credit">
+        By <a href="https://www.linkedin.com/in/muhammad-anas-khan786/" target="_blank">Anas Khan</a>
+    </div>
+    <script>
+        document.getElementById('courses').addEventListener('change', function () {
+            var container = document.getElementById('course-inputs');
+            container.innerHTML = '';
+            var sameCreditHours = confirm("Are the credit hours of all classes the same?");
+            if (sameCreditHours) {
+                var creditHours = prompt("Enter the credit hours of each class:"); 
+                for (var i = 0; i < this.value; i++) {
+                    container.innerHTML += `
+                        <div class="form-group">
+                            <label for="grade${i}">Marks Obtained in Course ${i + 1}:</label>
+                            <input type="number" name="grade${i}" id="grade${i}" min="0" max="100" required>
+                        </div>
+                    `;
+                }
+                for (var j = 0; j < this.value; j++) {
+                    container.innerHTML += `
+                        <input type="hidden" name="credit-hours${j}" id="credit-hours${j}" value="${creditHours}">
+                    `;
+                }
+            } else {
+                for (var i = 0; i < this.value; i++) {
+                    container.innerHTML += `
+                        <div class="form-group">
+                            <label for="grade${i}">Marks Obtained in Course ${i + 1}:</label>
+                            <input type="number" name="grade${i}" id="grade${i}" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="credit-hours${i}">Credit Hours of Course ${i + 1}:</label>
+                            <input type="number" name="credit-hours${i}" id="credit-hours${i}" min="1" required>
+                        </div>
+                    `;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
